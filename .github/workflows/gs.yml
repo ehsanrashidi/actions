@@ -1,4 +1,4 @@
-name: Daily Google Suggestions
+name: gs action
 
 on:
     schedule:
@@ -28,4 +28,4 @@ jobs:
             - name: Run the Script with DB URL as ENV variable
               env:
                   DB_URL: ${{ secrets.MY_DB_URL }}
-              run: node index.js
+              run: node gs.js

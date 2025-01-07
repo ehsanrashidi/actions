@@ -1,0 +1,26 @@
+name: ut action
+on:
+    schedule:
+        - cron: "0 * * * *" # هر ساعت اجرا شود
+    workflow_dispatch:
+
+jobs:
+    update-trends:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "18"
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Run script to update trends.json
+              run: node ut.js # نام فایل اسکریپت شما
+
+            - name: Commit and push changes
