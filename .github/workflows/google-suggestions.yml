@@ -1,0 +1,31 @@
+name: Daily Google Suggestions
+
+on:
+    schedule:
+        - cron: "0 0 * * *" # Runs the workflow every day at midnight UTC
+    workflow_dispatch: # Allows manual triggering
+
+jobs:
+    run-daily-script:
+        runs-on: ubuntu-latest
+
+        steps:
+            # Checkout the repository
+            - name: Checkout Repository
+              uses: actions/checkout@v3
+
+            # Set up Node.js
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "18" # Ensure you use the version of Node.js your script requires
+
+            # Install dependencies
+            - name: Install Dependencies
+              run: npm install
+
+            # Set environment variable for the secret
+            - name: Run the Script with DB URL as ENV variable
+              env:
+                  DB_URL: ${{ secrets.MY_DB_URL }}
+              run: node index.js
