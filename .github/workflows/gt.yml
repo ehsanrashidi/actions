@@ -1,26 +1,31 @@
-name: ut action
+name: gt action
+
 on:
     schedule:
-        - cron: "0 * * * *" # هر ساعت اجرا شود
-    workflow_dispatch:
+        - cron: "0 0 * * *" # Runs the workflow every day at midnight UTC
+    workflow_dispatch: # Allows manual triggering
 
 jobs:
-    update-trends:
+    run-gt-script:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Checkout repository
+            # Checkout the repository
+            - name: Checkout Repository
               uses: actions/checkout@v3
 
-            - name: Set up Node.js
+            # Set up Node.js
+            - name: Setup Node.js
               uses: actions/setup-node@v3
               with:
-                  node-version: "18"
+                  node-version: "18" # Ensure you use the version of Node.js your script requires
 
-            - name: Install dependencies
+            # Install dependencies
+            - name: Install Dependencies
               run: npm install
 
-            - name: Run script to update trends.json
+            # Set environment variable for the secret
+            - name: Run the Script with DB URL as ENV variable
+              env:
+                  DB_URL: ${{ secrets.MY_DB_URL }}
               run: node gt.js
-
-            - name: Commit and push changes
