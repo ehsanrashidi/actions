@@ -2,8 +2,8 @@ name: gs action
 
 on:
     schedule:
-        - cron: "0 0 * * *" # Runs the workflow every day at midnight UTC
-    workflow_dispatch: # Allows manual triggering
+        - cron: "*/15 * * * *" # https://crontab.guru/#*/15_*_*_*_*
+    workflow_dispatch:
 
 jobs:
     run-gs-script:
